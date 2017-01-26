@@ -1,0 +1,193 @@
+swagger: "2.0"
+################################################################################
+#                              API Information                                 #
+################################################################################
+info:
+  version: 2.0.0
+  title: Pananames.com Merchant's API
+  description: |
+    This manual describes the API commands for domain handling.
+
+    ### URL
+
+    All API access is over HTTP, and accessed from the api.pananames.com domain
+
+    ```
+    https://api.pananames.com/api/registrar/
+    ```
+
+    All requests are submitted using the following HTTP interface
+
+    ```
+    BASE_URL?VERSION=1&SIGNATURE=secret&METHOD=method&PARAMETER1=value1...
+    ```
+
+    The only way to secure transferred data is using HTTPS, no other security is currently possible.
+
+    ### Signature
+
+    Parameter **SIGNATURE** is merchant encoded constant string generated once when creating merchant.
+
+    ### Parameter’s Types
+
+    Type | Description
+    ------------ | -------------
+    INTEGER |  integer number
+    TEXT | variable-length array of characters
+    DOMAIN | TEXT which represents a domain name
+    IPADDRESS | TEXT which represents an IP address
+    NAMESERVER | TEXT which represents domain name of the DNS server
+    TARGET | TEXT which represents domain name or URL to forward
+
+    ### Response
+
+    The server responds with *Content-type: application/json*
+
+    ### API Roles
+    API supports one user role - merchant
+
+################################################################################
+#                  Host, Base Path, Schemes and Content Types                  #
+################################################################################
+host: api.pananames.com
+basePath: /merchant/v2
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+################################################################################
+#                                  Security                                    #
+################################################################################
+securityDefinitions:
+  key:
+    type: apiKey
+    in: query
+    name: signature
+security:
+  - key: []
+
+################################################################################
+#                                   Responses                                  #
+################################################################################
+responses:
+  400:
+    description: The request was invalid or cannot be served. The exact error should be explained in the error payload.
+    schema:
+      type: object
+      properties:
+        error:
+          $ref: '#/definitions/Error'
+    examples:
+      application/json:
+        name: Puma
+        type: Dog
+        color: Black
+        gender: Female
+        breed: Mixed
+
+  403:
+    description: The server understood the request, but is refusing it or the access is not allowed.
+    schema:
+      type: object
+      properties:
+        error:
+          $ref: '#/definitions/Error'
+
+#   bad_request:
+#     desctiption: The request was invalid or cannot be served. The exact error should be explained in the error payload.
+#   forbidden:
+#     description: The server understood the request, but is refusing it or the access is not allowed.
+
+################################################################################
+#                                   Parameters                                 #
+################################################################################
+parameters:
+  domain:
+    name: domain
+    in: query
+    description: String which represents a domain name
+    type: string
+    required: true
+    minLength: 4
+
+paths:
+  /check:
+    get:
+      description: |
+        This command is used to determine if an object can be provisioned within a repository. It provides a hint that allows a client to anticipate the success or failure of provisioning an object using the create method, as object-provisioning requirements are ultimately a matter of server policy.
+
+        When a check command has been processed successfully, the <resData> element MUST contain a child <domain:chkData> element that identifies the domain namespace. The <domain:chkData> element contains the following child element:
+
+        #### Blocking Status
+        Non-blocking
+
+      parameters:
+        - $ref: '#/parameters/domain'
+      responses:
+        400:
+          $ref: '#/responses/400'
+        403:
+          $ref: '#/responses/403'
+        200:
+          description: Information about queried domain avalibility, prices and extensions.
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: the fully qualified name of the queried domain object
+              is_avaliable:
+                type: boolean
+                description: true value means that the object can be provisioned. false value means that the object can not be provisioned.
+              is_premium:
+                type: boolean
+              prices:
+                $ref: '#/definitions/Prices'
+
+definitions:
+
+  Error:
+    type: object
+    required:
+    - code
+    - message
+    properties:
+      code:
+        type: integer
+        description: Unique error code
+      message:
+        type: string
+        description: Error message
+
+  Price:
+    type: object
+    properties:
+      currency:
+        type: string
+        default: usd
+        enum:
+        - usd
+        - eur
+      register:
+        type: number
+        format: float
+      renew:
+        type: number
+        format: float
+      transfer:
+        type: number
+        format: float
+      is_promo:
+        type: boolean
+        description: True if prices are promotional.
+
+  Prices:
+    type: object
+    allOf:
+    - $ref: '#/definitions/Price'
+    - type: object
+      properties:
+        common:
+          $ref: '#/definitions/Price'
