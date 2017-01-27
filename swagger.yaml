@@ -43,6 +43,30 @@ info:
 
     The server responds with *Content-type: application/json*
 
+    ### Errors
+
+    All error messages have same format.
+    ```json
+    {
+      "error": {
+        "code": 400,
+        "message": "Bad request",
+        "description": "JSON is invalid."
+      }
+    }
+    ```
+
+    These errors may be returned by all methods.
+
+    HTTP Status | Error code | Message | Description
+    - | - | -
+    `400` | 400 | Bad Request | The request was invalid or cannot be served. The exact error should be explained in the error payload.
+    `401` | 401 | Unauthorized | Merchant's signature wasn't provided or was invalid.
+    `404` | 404 | Not found | There is no resource behind the URI.
+    `500` | 500 | Internal Server Error | You should contact with support.
+
+    You'll get back all other errors with `200` HTTP status code. Each method has its own list of errors with codes.
+
     ### API Roles
     API supports one user role - merchant
 
@@ -79,13 +103,6 @@ responses:
       properties:
         error:
           $ref: '#/definitions/Error'
-    examples:
-      application/json:
-        name: Puma
-        type: Dog
-        color: Black
-        gender: Female
-        breed: Mixed
 
   403:
     description: The server understood the request, but is refusing it or the access is not allowed.
@@ -160,9 +177,17 @@ definitions:
       message:
         type: string
         description: Error message
+      description:
+        type: string
+        description: Error description
 
   Price:
     type: object
+    required:
+    - currency
+    - register
+    - renew
+    - transfer
     properties:
       currency:
         type: string
