@@ -118,6 +118,10 @@ paths:
         - | - | -
         XXX | Message | Description
 
+        #### Extensions
+        Key | Type | Description
+        - | - | -
+        `claimKey` | string | Claim type.
 
         #### Blocking Status
         Non-blocking
@@ -129,6 +133,11 @@ paths:
           description: Information about queried domain avalibility, prices and extensions.
           schema:
             type: object
+            required:
+            - name
+            - is_avaliable
+            - is_premium
+            - prices
             properties:
               name:
                 type: string
@@ -140,6 +149,9 @@ paths:
                 type: boolean
               prices:
                 $ref: '#/definitions/Prices'
+              extensions:
+                type: object
+                description: Dictionary with extensions values. See Extensions section in method description.
 
 definitions:
 
