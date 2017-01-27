@@ -55,7 +55,7 @@ info:
     These errors may be returned by all methods.
 
     HTTP Status | Error code | Message | Description
-    - | - | -
+    - | - | - | -
     `400` | 400 | Bad Request | The request was invalid or cannot be served. The exact error should be explained in the error payload.
     `401` | 401 | Unauthorized | Merchant's signature wasn't provided or was invalid.
     `404` | 404 | Not found | There is no resource behind the URI.
@@ -133,16 +133,18 @@ paths:
 
         When a check command has been processed successfully, the <resData> element MUST contain a child <domain:chkData> element that identifies the domain namespace. The <domain:chkData> element contains the following child element:
 
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+
         #### Blocking Status
         Non-blocking
 
       parameters:
         - $ref: '#/parameters/domain'
       responses:
-        400:
-          $ref: '#/responses/400'
-        403:
-          $ref: '#/responses/403'
         200:
           description: Information about queried domain avalibility, prices and extensions.
           schema:
