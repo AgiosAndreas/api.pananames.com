@@ -13,7 +13,7 @@ info:
     All API access is over HTTPS, and accessed from the api.pananames.com domain
 
     ```
-    https://api.pananames.com/v1/
+    https://api.pananames.com/v2/
     ```
 
     All requests are submitted using the following HTTP interface
