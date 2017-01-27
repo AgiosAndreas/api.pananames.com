@@ -10,19 +10,15 @@ info:
 
     ### URL
 
-    All API access is over HTTP, and accessed from the api.pananames.com domain
+    All API access is over HTTPS, and accessed from the api.pananames.com domain
 
     ```
-    https://api.pananames.com/api/registrar/
+    https://api.pananames.com/v1/
     ```
 
     All requests are submitted using the following HTTP interface
 
-    ```
-    BASE_URL?VERSION=1&SIGNATURE=secret&METHOD=method&PARAMETER1=value1...
-    ```
-
-    The only way to secure transferred data is using HTTPS, no other security is currently possible.
+    The only way to secure transferred data is using **HTTPS**, no other security is currently possible.
 
     ### Signature
 
