@@ -88,26 +88,6 @@ securityDefinitions:
 security:
   - key: []
 
-################################################################################
-#                                   Responses                                  #
-################################################################################
-responses:
-  400:
-    description: The request was invalid or cannot be served. The exact error should be explained in the error payload.
-    schema:
-      type: object
-      properties:
-        error:
-          $ref: '#/definitions/Error'
-
-  403:
-    description: The server understood the request, but is refusing it or the access is not allowed.
-    schema:
-      type: object
-      properties:
-        error:
-          $ref: '#/definitions/Error'
-
 #   bad_request:
 #     desctiption: The request was invalid or cannot be served. The exact error should be explained in the error payload.
 #   forbidden:
