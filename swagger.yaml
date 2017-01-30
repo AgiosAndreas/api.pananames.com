@@ -87,12 +87,6 @@ securityDefinitions:
     name: signature
 security:
   - key: []
-
-#   bad_request:
-#     desctiption: The request was invalid or cannot be served. The exact error should be explained in the error payload.
-#   forbidden:
-#     description: The server understood the request, but is refusing it or the access is not allowed.
-
 ################################################################################
 #                                   Parameters                                 #
 ################################################################################
@@ -152,6 +146,42 @@ paths:
               extensions:
                 type: object
                 description: Dictionary with extensions values. See Extensions section in method description.
+  /whois:
+    get:
+      description: |
+        Get WHOIS information of the domain name.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking
+
+      parameters:
+        - $ref: '#/parameters/domain'
+      responses:
+        200:
+          description: Information about queried domain avalibility, prices and extensions.
+          schema:
+            type: object
+            required:
+            - domain
+            - admin_contact
+            - tech_contact
+            - billing_contact
+            properties:
+              domain:
+                type: object
+                description: Information about domain
+              admin_contact:
+                $ref: '#/definitions/ContactInfo'
+                description: Information about domain
+              tech_contact:
+                $ref: '#/definitions/ContactInfo'
+              billing_contact:
+                $ref: '#/definitions/ContactInfo'
 
 definitions:
 
@@ -206,3 +236,47 @@ definitions:
       properties:
         common:
           $ref: '#/definitions/Price'
+
+  ContactInfo:
+    type: object
+    required:
+    - org
+    - name
+    - email
+    - address
+    - city
+    - state
+    - zip
+    - country
+    - phone
+    properties:
+      org:
+        type: string
+        description: Contact organization
+      name:
+        type: string
+        description: Contact name
+      email:
+        type: string
+        description: Contact email
+      address:
+        type: string
+        description: Contact address
+      city:
+        type: string
+        description: Contact city
+      state:
+        type: string
+        description: Contact state
+      zip:
+        type: string
+        description: Contact zip
+      country:
+        type: string
+        description: Contact country
+      phone:
+        type: string
+        description: Contact phone
+      country_code:
+        type: string
+        description: Contact country code
