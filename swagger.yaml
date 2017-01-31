@@ -180,7 +180,7 @@ paths:
             - billing_contact
             properties:
               domain:
-                $ref: '#/definitions/ContactInfo'
+                $ref: '#/definitions/DomainInfo'
               registrant_contact:
                 $ref: '#/definitions/ContactInfo'
               admin_contact:
