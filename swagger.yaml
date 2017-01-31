@@ -83,7 +83,7 @@ produces:
 securityDefinitions:
   key:
     type: apiKey
-    in: query
+    in: header
     name: signature
 security:
   - key: []
@@ -184,11 +184,45 @@ paths:
                 description: Information about domain
               admin_contact:
                 $ref: '#/definitions/ContactInfo'
-                description: Information about domain
               tech_contact:
                 $ref: '#/definitions/ContactInfo'
               billing_contact:
                 $ref: '#/definitions/ContactInfo'
+    put:
+      description: |
+        Set WHOIS information of the domain name.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking
+
+      parameters:
+        - name: payload
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+            - admin_contact
+            - tech_contact
+            - billing_contact
+            properties:
+              admin_contact:
+                $ref: '#/definitions/ContactInfo'
+              tech_contact:
+                $ref: '#/definitions/ContactInfo'
+              billing_contact:
+                $ref: '#/definitions/ContactInfo'
+
+      responses:
+        200:
+          description: WHOIS information about queried domain.
+          schema:
+            type: object
 
 definitions:
 
