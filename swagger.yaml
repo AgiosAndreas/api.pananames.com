@@ -147,6 +147,8 @@ paths:
                 type: object
                 description: Dictionary with extensions values. See Extensions section in method description.
   /whois:
+    parameters:
+    - $ref: '#/parameters/domain'
     get:
       description: |
         Get WHOIS information of the domain name.
@@ -160,10 +162,15 @@ paths:
         Non-blocking
 
       parameters:
-        - $ref: '#/parameters/domain'
+        - name: public_preview
+          in: query
+          description: If privacy protection enabled, for see public data, set value to true
+          type: boolean
+          default: false
+
       responses:
         200:
-          description: Information about queried domain avalibility, prices and extensions.
+          description: WHOIS information about queried domain.
           schema:
             type: object
             required:
