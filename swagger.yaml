@@ -207,10 +207,17 @@ paths:
           schema:
             type: object
             required:
+            - registrant_contact
             - admin_contact
             - tech_contact
             - billing_contact
+            - privacy_enabled
             properties:
+              privacy_enabled:
+                type: boolean
+                description: If true WHOIS privacy protection enabled
+              registrant_contact:
+                $ref: '#/definitions/ContactInfo'
               admin_contact:
                 $ref: '#/definitions/ContactInfo'
               tech_contact:
