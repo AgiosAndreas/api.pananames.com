@@ -180,8 +180,9 @@ paths:
             - billing_contact
             properties:
               domain:
-                type: object
-                description: Information about domain
+                $ref: '#/definitions/ContactInfo'
+              registrant_contact:
+                $ref: '#/definitions/ContactInfo'
               admin_contact:
                 $ref: '#/definitions/ContactInfo'
               tech_contact:
@@ -328,3 +329,27 @@ definitions:
       country_code:
         type: string
         description: Contact country code
+
+  DomainInfo:
+    type: object
+    required:
+    - name
+    - created
+    - updated
+    description: Information about domain
+    properties:
+      name:
+        type: string
+        description: The fully qualified name of the domain.
+      created:
+        type: string
+        format: dateTime
+        description: The date and time of domain object creation.
+      updated:
+        type: string
+        format: dateTime
+        description: The date and time of domain object updation.
+      expiration:
+        type: string
+        format: dateTime
+        description: The date and time identifying the end of the domain object's registration period.
