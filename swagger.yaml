@@ -232,6 +232,60 @@ paths:
           schema:
             type: object
 
+  /domains:
+    post:
+      description: |
+        This command is sending request to register a domain name.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Blocking 3-5 sec.
+
+      parameters:
+        - name: payload
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+            - period
+            - registrant_contact
+            - admin_contact
+            - tech_contact
+            - billing_contact
+            properties:
+              period:
+                type: integer
+                description: Registration period in years.
+              fee:
+                type: number
+                format: float
+                description: Price to register premium domain. Required only for premium domains.
+              registrant_contact:
+                $ref: '#/definitions/ContactInfo'
+              admin_contact:
+                $ref: '#/definitions/ContactInfo'
+              tech_contact:
+                $ref: '#/definitions/ContactInfo'
+              billing_contact:
+                $ref: '#/definitions/ContactInfo'
+
+      responses:
+        200:
+          description: WHOIS information about queried domain.
+          schema:
+            type: object
+            required:
+              - domain_name
+            properties:
+              domain_name:
+                type: string
+                description: The fully qualified name of the domain object.
+
 definitions:
 
   Error:
