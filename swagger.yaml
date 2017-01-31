@@ -287,6 +287,30 @@ paths:
                 description: The fully qualified name of the domain object.
 
   /domains/{domain}:
+    delete:
+      description: |
+        This command provides a transform operation that allows a client to delete a domain object. Domain object can be deleted at any time but only during first 5 (five) days it will be refunded by registry.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      parameters:
+        - name: domain
+          in: path
+          description: The fully qualified name of the domain.
+          type: string
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+
     put:
       description: |
         This command provides a transform operation that allows a client to extend the validity period of a domain object. Domain may be renewed only for a period 1 to 10 years.
