@@ -146,6 +146,7 @@ paths:
               extensions:
                 type: object
                 description: Dictionary with extensions values. See Extensions section in method description.
+
   /whois:
     parameters:
     - $ref: '#/parameters/domain'
@@ -273,10 +274,9 @@ paths:
                 $ref: '#/definitions/ContactInfo'
               billing_contact:
                 $ref: '#/definitions/ContactInfo'
-
       responses:
         200:
-          description: WHOIS information about queried domain.
+          description: OK
           schema:
             type: object
             required:
@@ -286,6 +286,49 @@ paths:
                 type: string
                 description: The fully qualified name of the domain object.
 
+  /domains/{domain}:
+    put:
+      description: |
+        This command provides a transform operation that allows a client to extend the validity period of a domain object. Domain may be renewed only for a period 1 to 10 years.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      parameters:
+        - name: domain
+          in: path
+          description: The fully qualified name of the domain.
+          type: string
+          required: true
+        - name: payload
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+            - period
+            properties:
+              period:
+                type: integer
+                description: Registration period in years.
+              fee:
+                type: number
+                format: float
+                description: Price to register premium domain. Required only for premium domains.
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/DomainInfo'
+
+################################################################################
+#                                Definitions                                   #
+################################################################################
 definitions:
 
   Error:
