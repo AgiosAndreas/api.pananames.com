@@ -183,6 +183,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/DomainInfo'
+
     post:
       description: |
         This command is sending request to register a domain name.
@@ -289,11 +290,7 @@ paths:
         Non-blocking
 
       parameters:
-        - name: domain
-          in: path
-          description: The fully qualified name of the domain.
-          type: string
-          required: true
+        - $ref: '#/parameters/domain'
         - name: payload
           in: body
           required: true
