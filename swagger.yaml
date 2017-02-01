@@ -24,17 +24,6 @@ info:
 
     Parameter **SIGNATURE** is merchant encoded constant string generated once when creating merchant.
 
-    ### Parameter’s Types
-
-    Type | Description
-    ------------ | -------------
-    INTEGER |  integer number
-    TEXT | variable-length array of characters
-    DOMAIN | TEXT which represents a domain name
-    IPADDRESS | TEXT which represents an IP address
-    NAMESERVER | TEXT which represents domain name of the DNS server
-    TARGET | TEXT which represents domain name or URL to forward
-
     ### Response
 
     The server responds with *Content-type: application/json*
@@ -62,9 +51,6 @@ info:
     `500` | 500 | Internal Server Error | You should contact with support.
 
     You'll get back all other errors with `200` HTTP status code. Each method has its own list of errors with codes.
-
-    ### API Roles
-    API supports one user role - merchant
 
 ################################################################################
 #                  Host, Base Path, Schemes and Content Types                  #
