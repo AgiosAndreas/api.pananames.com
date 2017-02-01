@@ -136,6 +136,49 @@ paths:
                 type: object
                 description: Dictionary with extensions values. See Extensions section in method description.
 
+  /whois/{domain}:
+    get:
+      description: |
+        Get WHOIS information of the domain name.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking
+
+      parameters:
+        - $ref: '#/parameters/domain'
+        - name: public_preview
+          in: query
+          description: If privacy protection enabled, for see public data, set value to true
+          type: boolean
+          default: false
+
+      responses:
+        200:
+          description: WHOIS information about queried domain.
+          schema:
+            type: object
+            required:
+              - domain
+              - admin_contact
+              - tech_contact
+              - billing_contact
+            properties:
+              domain:
+                $ref: '#/definitions/DomainInfo'
+              registrant_contact:
+                $ref: '#/definitions/ContactInfo'
+              admin_contact:
+                $ref: '#/definitions/ContactInfo'
+              tech_contact:
+                $ref: '#/definitions/ContactInfo'
+              billing_contact:
+                $ref: '#/definitions/ContactInfo'
+
   /domains:
     get:
       operationId: domainslist
@@ -183,7 +226,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/DomainInfo'
-
     post:
       description: |
         This command is sending request to register a domain name.
