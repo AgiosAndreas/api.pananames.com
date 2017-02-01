@@ -8,7 +8,9 @@ info:
   description: |
     This manual describes the API commands for domain handling.
 
-    ### URL
+
+
+    ### Endpoint
 
     All API access is over HTTPS, and accessed from the api.pananames.com domain
 
@@ -16,17 +18,13 @@ info:
     https://api.pananames.com/v2/
     ```
 
-    All requests are submitted using the following HTTP interface
-
-    The only way to secure transferred data is using **HTTPS**, no other security is currently possible.
-
-    ### Signature
-
-    Parameter **SIGNATURE** is merchant encoded constant string generated once when creating merchant.
-
-    ### Response
-
     The server responds with *Content-type: application/json*
+
+    ### API Key Security
+
+    #### API Key
+    API keys grant full access to your Pananames account and should be protected the same way you would protect your password.
+    You should generate API key for each IP. If a specific API key is compromised, you can disable that key without disabling access to all of your other integrations.
 
     ### Errors
 
@@ -51,6 +49,11 @@ info:
     `500` | 500 | Internal Server Error | You should contact with support.
 
     You'll get back all other errors with `200` HTTP status code. Each method has its own list of errors with codes.
+
+    ### Rate Limits
+    Pananames API is rate limited.
+
+    If an application abuses the rate limits, it will be blacklisted. Blacklisted apps are unable to get a response from the Pananames API.
 
 ################################################################################
 #                  Host, Base Path, Schemes and Content Types                  #
@@ -88,6 +91,7 @@ parameters:
 paths:
   /check:
     get:
+      operationId: check
       description: |
         This command is used to determine if an object can be provisioned within a repository. It provides a hint that allows a client to anticipate the success or failure of provisioning an object using the create method, as object-provisioning requirements are ultimately a matter of server policy.
 
