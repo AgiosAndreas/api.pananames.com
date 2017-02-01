@@ -21,7 +21,7 @@ info:
     The server responds with *Content-type: application/json*
 
     ### API Key Security
-    
+
     API keys grant full access to your Pananames account and should be protected the same way you would protect your password.
     You should generate API key for each IP. If a specific API key is compromised, you can disable that key without disabling access to all of your other integrations.
 
@@ -136,92 +136,6 @@ paths:
                 type: object
                 description: Dictionary with extensions values. See Extensions section in method description.
 
-  /whois:
-    parameters:
-    - $ref: '#/parameters/domain'
-    get:
-      description: |
-        Get WHOIS information of the domain name.
-
-        #### Errors
-        Error code | Message | Description
-        - | - | -
-        XXX | Message | Description
-
-        #### Blocking Status
-        Non-blocking
-
-      parameters:
-        - name: public_preview
-          in: query
-          description: If privacy protection enabled, for see public data, set value to true
-          type: boolean
-          default: false
-
-      responses:
-        200:
-          description: WHOIS information about queried domain.
-          schema:
-            type: object
-            required:
-            - domain
-            - admin_contact
-            - tech_contact
-            - billing_contact
-            properties:
-              domain:
-                $ref: '#/definitions/DomainInfo'
-              registrant_contact:
-                $ref: '#/definitions/ContactInfo'
-              admin_contact:
-                $ref: '#/definitions/ContactInfo'
-              tech_contact:
-                $ref: '#/definitions/ContactInfo'
-              billing_contact:
-                $ref: '#/definitions/ContactInfo'
-    put:
-      description: |
-        Set WHOIS information of the domain name.
-
-        #### Errors
-        Error code | Message | Description
-        - | - | -
-        XXX | Message | Description
-
-        #### Blocking Status
-        Non-blocking
-
-      parameters:
-        - name: payload
-          in: body
-          required: true
-          schema:
-            type: object
-            required:
-            - registrant_contact
-            - admin_contact
-            - tech_contact
-            - billing_contact
-            - privacy_enabled
-            properties:
-              privacy_enabled:
-                type: boolean
-                description: If true WHOIS privacy protection enabled
-              registrant_contact:
-                $ref: '#/definitions/ContactInfo'
-              admin_contact:
-                $ref: '#/definitions/ContactInfo'
-              tech_contact:
-                $ref: '#/definitions/ContactInfo'
-              billing_contact:
-                $ref: '#/definitions/ContactInfo'
-
-      responses:
-        200:
-          description: WHOIS information about queried domain.
-          schema:
-            type: object
-
   /domains:
     get:
       operationId: domainslist
@@ -269,7 +183,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/DomainInfo'
-
     post:
       description: |
         This command is sending request to register a domain name.
@@ -323,6 +236,31 @@ paths:
                 description: The fully qualified name of the domain object.
 
   /domains/{domain}:
+
+    parameters:
+      - name: domain
+        in: path
+        description: The fully qualified name of the domain.
+        type: string
+        required: true
+
+    get:
+      description: |
+        Get domain.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
     delete:
       description: |
         This command provides a transform operation that allows a client to delete a domain object. Domain object can be deleted at any time but only during first 5 (five) days it will be refunded by registry.
@@ -335,12 +273,6 @@ paths:
         #### Blocking Status
         Non-blocking.
 
-      parameters:
-        - name: domain
-          in: path
-          description: The fully qualified name of the domain.
-          type: string
-          required: true
       responses:
         200:
           description: OK
@@ -360,11 +292,6 @@ paths:
         Non-blocking.
 
       parameters:
-        - name: domain
-          in: path
-          description: The fully qualified name of the domain.
-          type: string
-          required: true
         - name: payload
           in: body
           required: true
@@ -385,6 +312,55 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/DomainInfo'
+
+  /domains/{domain}/whois:
+    put:
+      description: |
+        Set WHOIS information of the domain.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking
+
+      parameters:
+        - name: domain
+          in: path
+          description: The fully qualified name of the domain.
+          type: string
+          required: true
+        - name: payload
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+            - registrant_contact
+            - admin_contact
+            - tech_contact
+            - billing_contact
+            - privacy_enabled
+            properties:
+              privacy_enabled:
+                type: boolean
+                description: If true WHOIS privacy protection enabled
+              registrant_contact:
+                $ref: '#/definitions/ContactInfo'
+              admin_contact:
+                $ref: '#/definitions/ContactInfo'
+              tech_contact:
+                $ref: '#/definitions/ContactInfo'
+              billing_contact:
+                $ref: '#/definitions/ContactInfo'
+
+      responses:
+        200:
+          description: WHOIS information about queried domain.
+          schema:
+            type: object
 
   /transfersout:
     get:
