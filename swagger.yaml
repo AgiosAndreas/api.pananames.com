@@ -21,8 +21,7 @@ info:
     The server responds with *Content-type: application/json*
 
     ### API Key Security
-
-    #### API Key
+    
     API keys grant full access to your Pananames account and should be protected the same way you would protect your password.
     You should generate API key for each IP. If a specific API key is compromised, you can disable that key without disabling access to all of your other integrations.
 
@@ -224,6 +223,53 @@ paths:
             type: object
 
   /domains:
+    get:
+      operationId: domainslist
+      description: |
+        Get domains list.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      parameters:
+        - name: page
+          in: query
+          required: true
+          type: integer
+          default: 1
+          description: Current page number.
+        - name: limit
+          in: query
+          type: integer
+          default: 25
+          description: Domains per page.
+
+      responses:
+        200:
+          description: Paged domains list.
+          schema:
+            type: object
+            required:
+              - page
+              - count
+              - domains
+            properties:
+              page:
+                type: integer
+                description: Current page number.
+              count:
+                type: integer
+                description: Total domains count.
+              domains:
+                type: array
+                items:
+                  $ref: '#/definitions/DomainInfo'
+
     post:
       description: |
         This command is sending request to register a domain name.
