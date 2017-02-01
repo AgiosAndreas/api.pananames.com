@@ -8,8 +8,6 @@ info:
   description: |
     This manual describes the API commands for domain handling.
 
-
-
     ### Endpoint
 
     All API access is over HTTPS, and accessed from the api.pananames.com domain
@@ -421,6 +419,63 @@ paths:
           schema:
             $ref: '#/definitions/DomainInfo'
 
+  /domains/{domain}/dns:
+    parameters:
+      - $ref: '#/parameters/domain'
+    get:
+      description: |
+        Get DNS servers for the domain.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              servers:
+                type: array
+                items:
+                  type: string
+    put:
+      description: |
+        Set DNS servers for the domain.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      parameters:
+        - name: payload
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+            - servers
+            properties:
+              servers:
+                type: array
+                items:
+                  type: string
+
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/DomainInfo'
+
   /transfersout:
     get:
       description: |
@@ -445,7 +500,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/DomainInfo'
-
     post:
       description: |
         Initialize transfer out process for domain.
@@ -534,7 +588,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/DomainInfo'
-
     post:
       description: |
         Initiate transfer in process for domain.
