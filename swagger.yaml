@@ -350,6 +350,95 @@ paths:
           schema:
             $ref: '#/definitions/DomainInfo'
 
+  /transfersout:
+    get:
+      description: |
+        Get list transfer out domains.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking
+      responses:
+        200:
+          description: Transfer out domains list.
+          schema:
+            type: object
+            required:
+            - domains
+            properties:
+              domains:
+                type: array
+                items:
+                  $ref: '#/definitions/DomainInfo'
+
+    post:
+      description: |
+        Initialize transfer out process for domain.
+        Domain will be unlocked and new auth code will be generated.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking
+
+      parameters:
+        - name: payload
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+            - domain
+            properties:
+              domain:
+                type: string
+      responses:
+        200:
+          description: Auth code for transfer.
+          schema:
+            type: object
+            required:
+            - auth_code
+            properties:
+              auth_code:
+                type: string
+    delete:
+      description: |
+        Cancel transfer out process for domain.
+        Domain will be locked.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking
+
+      parameters:
+        - name: payload
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+            - domain
+            properties:
+              domain:
+                type: string
+      responses:
+        200:
+          description: OK.
+          schema:
+            $ref: '#/definitions/DomainInfo'
+
 ################################################################################
 #                                Definitions                                   #
 ################################################################################
