@@ -425,6 +425,103 @@ paths:
           schema:
             $ref: '#/definitions/DomainInfo'
 
+  /transfersin:
+    get:
+      description: |
+        Get list transfer in domains.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking
+      responses:
+        200:
+          description: Transfer in domains list.
+          schema:
+            type: object
+            required:
+            - domains
+            properties:
+              domains:
+                type: array
+                items:
+                  $ref: '#/definitions/DomainInfo'
+
+    post:
+      description: |
+        Initiate transfer in process for domain.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking
+
+      parameters:
+        - name: payload
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+            - domain
+            - auth_code
+            properties:
+              domain:
+                type: string
+              auth_code:
+                type: string
+              fee:
+                type: number
+                format: float
+                description: Price to transfer premium domain
+      responses:
+        200:
+          description: OK.
+          schema:
+            type: object
+            required:
+            - domain
+            properties:
+              domain:
+                $ref: '#/definitions/DomainInfo'
+              clint_id:
+                type: string
+                description: The identifier of the client that SHOULD act upon a PENDING transfer request.
+    delete:
+      description: |
+        Cancel transfer in process for domain.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking
+
+      parameters:
+        - name: payload
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+            - domain
+            properties:
+              domain:
+                type: string
+      responses:
+        200:
+          description: OK.
+          schema:
+            $ref: '#/definitions/DomainInfo'
+
 ################################################################################
 #                                Definitions                                   #
 ################################################################################
@@ -549,3 +646,13 @@ definitions:
         type: string
         format: dateTime
         description: The date and time identifying the end of the domain object's registration period.
+      transfer_status:
+        type: string
+        enum:
+          - unknown
+          - pending
+          - client approved
+          - client rejected
+          - client cancelled
+          - server approved
+          - waiting confirm
