@@ -80,15 +80,15 @@ security:
 ################################################################################
 parameters:
   domain:
-    name: domain
-    in: query
-    description: String which represents a domain name
-    type: string
-    required: true
-    minLength: 4
+      name: domain
+      in: path
+      description: The fully qualified name of the domain.
+      type: string
+      required: true
+      minLength: 3
 
 paths:
-  /check:
+  /check/{domain}:
     get:
       operationId: check
       description: |
@@ -238,11 +238,7 @@ paths:
   /domains/{domain}:
 
     parameters:
-      - name: domain
-        in: path
-        description: The fully qualified name of the domain.
-        type: string
-        required: true
+      - $ref: '#/parameters/domain'
 
     get:
       description: |
@@ -278,40 +274,6 @@ paths:
           description: OK
           schema:
             type: object
-
-    put:
-      description: |
-        This command provides a transform operation that allows a client to extend the validity period of a domain object. Domain may be renewed only for a period 1 to 10 years.
-
-        #### Errors
-        Error code | Message | Description
-        - | - | -
-        XXX | Message | Description
-
-        #### Blocking Status
-        Non-blocking.
-
-      parameters:
-        - name: payload
-          in: body
-          required: true
-          schema:
-            type: object
-            required:
-            - period
-            properties:
-              period:
-                type: integer
-                description: Registration period in years.
-              fee:
-                type: number
-                format: float
-                description: Price to register premium domain. Required only for premium domains.
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: '#/definitions/DomainInfo'
 
   /domains/{domain}/whois:
     put:
@@ -361,6 +323,42 @@ paths:
           description: WHOIS information about queried domain.
           schema:
             type: object
+
+  /domains/{domain}/renew:
+    put:
+      description: |
+        This command provides a transform operation that allows a client to extend the validity period of a domain object. Domain may be renewed only for a period 1 to 10 years.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      parameters:
+        - $ref: '#/parameters/domain'
+        - name: payload
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+            - period
+            properties:
+              period:
+                type: integer
+                description: Registration period in years.
+              fee:
+                type: number
+                format: float
+                description: Price to register premium domain. Required only for premium domains.
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/DomainInfo'
 
   /transfersout:
     get:
