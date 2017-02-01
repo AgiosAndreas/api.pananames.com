@@ -399,6 +399,28 @@ paths:
           schema:
             $ref: '#/definitions/DomainInfo'
 
+  /domains/{domain}/redeem:
+    put:
+      operationId: redeem
+      description: |
+        Restore domain name during Redemption Grace Period.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      parameters:
+        - $ref: '#/parameters/domain'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/DomainInfo'
+
   /transfersout:
     get:
       description: |
