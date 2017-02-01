@@ -497,6 +497,10 @@ paths:
             required:
             - domain
             - auth_code
+            - registrant_contact
+            - admin_contact
+            - tech_contact
+            - billing_contact
             properties:
               domain:
                 type: string
@@ -506,6 +510,14 @@ paths:
                 type: number
                 format: float
                 description: Price to transfer premium domain
+              registrant_contact:
+                $ref: '#/definitions/ContactInfo'
+              admin_contact:
+                $ref: '#/definitions/ContactInfo'
+              tech_contact:
+                $ref: '#/definitions/ContactInfo'
+              billing_contact:
+                $ref: '#/definitions/ContactInfo'
       responses:
         200:
           description: OK.
