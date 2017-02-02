@@ -827,15 +827,19 @@ paths:
           schema:
             type: object
             required:
-            - domains
+            - transfers
             properties:
-              domains:
+              transfers:
                 type: array
                 items:
-                  $ref: '#/definitions/DomainInfo'
+                  $ref: '#/definitions/TransferIn'
     post:
       description: |
         Initiate transfer in process for domain.
+
+        You should provide correct WHOIS information.
+
+        Also you can provide NS
 
         #### Errors
         Error code | Message | Description
@@ -850,31 +854,7 @@ paths:
           in: body
           required: true
           schema:
-            type: object
-            required:
-            - domain
-            - auth_code
-            - registrant_contact
-            - admin_contact
-            - tech_contact
-            - billing_contact
-            properties:
-              domain:
-                type: string
-              auth_code:
-                type: string
-              fee:
-                type: number
-                format: float
-                description: Price to transfer premium domain
-              registrant_contact:
-                $ref: '#/definitions/ContactInfo'
-              admin_contact:
-                $ref: '#/definitions/ContactInfo'
-              tech_contact:
-                $ref: '#/definitions/ContactInfo'
-              billing_contact:
-                $ref: '#/definitions/ContactInfo'
+            $ref: '#/definitions/TransferIn'
       responses:
         200:
           description: OK.
@@ -885,7 +865,7 @@ paths:
             properties:
               domain:
                 $ref: '#/definitions/DomainInfo'
-              clint_id:
+              client_id:
                 type: string
                 description: The identifier of the client that SHOULD act upon a PENDING transfer request.
     delete:
@@ -915,7 +895,7 @@ paths:
         200:
           description: OK.
           schema:
-            $ref: '#/definitions/DomainInfo'
+            type: object
 
 ################################################################################
 #                                Definitions                                   #
@@ -1068,7 +1048,7 @@ definitions:
     type: object
     required:
       - type
-      - date
+      - data
       - aux
     properties:
       name:
@@ -1093,3 +1073,30 @@ definitions:
       ttl:
         type: integer
         description: TTL of the host record
+
+  TransferIn:
+    type: object
+    required:
+      - domain
+      - auth_code
+      - registrant_contact
+      - admin_contact
+      - tech_contact
+      - billing_contact
+    properties:
+      domain:
+        type: string
+      auth_code:
+        type: string
+      fee:
+        type: number
+        format: float
+        description: Price to transfer premium domain
+      registrant_contact:
+        $ref: '#/definitions/ContactInfo'
+      admin_contact:
+        $ref: '#/definitions/ContactInfo'
+      tech_contact:
+        $ref: '#/definitions/ContactInfo'
+      billing_contact:
+        $ref: '#/definitions/ContactInfo'
