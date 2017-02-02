@@ -51,7 +51,6 @@ info:
     Pananames API is rate limited.
 
     If an application abuses the rate limits, it will be blacklisted. Blacklisted apps are unable to get a response from the Pananames API.
-
 ################################################################################
 #                  Host, Base Path, Schemes and Content Types                  #
 ################################################################################
@@ -277,10 +276,8 @@ paths:
                 description: The fully qualified name of the domain object.
 
   /domains/{domain}:
-
     parameters:
       - $ref: '#/parameters/domain'
-
     get:
       description: |
         Get domain.
@@ -475,6 +472,76 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/DomainInfo'
+
+  /domains/{domain}/redirect:
+    parameters:
+      - $ref: '#/parameters/domain'
+    get:
+      description: |
+        Get redirect for the domain.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              target:
+                type: string
+    put:
+      description: |
+        Set redirect for the domain.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      parameters:
+        - name: payload
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+            - servers
+            properties:
+              target:
+                type: string
+
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/DomainInfo'
+    delete:
+      description: |
+        Remove redirect for the domain.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
 
   /transfersout:
     get:
