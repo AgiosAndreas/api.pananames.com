@@ -561,7 +561,7 @@ paths:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/DomainInfo'
+            type: object
     delete:
       description: |
         Remove redirect for the domain.
@@ -573,6 +573,87 @@ paths:
 
         #### Blocking Status
         Non-blocking.
+
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+
+  /domains/{domain}/childdnses:
+    parameters:
+      - $ref: '#/parameters/domain'
+    get:
+      description: |
+        Get list of child DNS servers for the domain.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      responses:
+        200:
+          description: Child DNS servers list.
+          schema:
+            type: object
+            required:
+              - servers
+            properties:
+              servers:
+                type: array
+                items:
+                  $ref: '#/definitions/NameServer'
+    post:
+      description: |
+        Create new child DNS server for the domain.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      parameters:
+        - name: payload
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/NameServer'
+
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+    delete:
+      description: |
+        Delete child DNS server for the domain by name.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      parameters:
+        - name: payload
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - name
+            properties:
+              name:
+                type: string
 
       responses:
         200:
@@ -910,3 +991,15 @@ definitions:
           - client cancelled
           - server approved
           - waiting confirm
+
+  NameServer:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+      ip:
+        type: string
+      ipv6:
+        type: string
