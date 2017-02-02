@@ -661,6 +661,66 @@ paths:
           schema:
             type: object
 
+  /domains/{domain}/dnsrecords:
+    parameters:
+      - $ref: '#/parameters/domain'
+    get:
+      description: |
+        Get DNS records for the domain.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            required:
+              - dns_records
+            properties:
+              dns_records:
+                type: array
+                items:
+                  $ref: '#/definitions/DnsRecord'
+    put:
+      description: |
+        Update DNS records for the domain.
+        Only batch update is supported. You should send empty `dns_records` array to remove all DNS records for the domain.
+
+        #### Errors
+        Error code | Message | Description
+        - | - | -
+        XXX | Message | Description
+
+        #### Blocking Status
+        Non-blocking.
+
+      parameters:
+        - name: payload
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+            - dns_records
+            properties:
+              dns_records:
+                type: array
+                items:
+                  $ref: '#/definitions/DnsRecord'
+
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+
   /transfersout:
     get:
       description: |
@@ -1003,3 +1063,33 @@ definitions:
         type: string
       ipv6:
         type: string
+
+  DnsRecord:
+    type: object
+    required:
+      - type
+      - date
+      - aux
+    properties:
+      name:
+        type: string
+        description: Name of the host record
+      type:
+        type: string
+        enum:
+          - A
+          - AAAA
+          - CNAME
+          - NS
+          - MX
+          - SRV
+          - TXT
+      data:
+        type: string
+        description: Data of the host record
+      aux:
+        type: integer
+        description: AUX of the host record
+      ttl:
+        type: integer
+        description: TTL of the host record
